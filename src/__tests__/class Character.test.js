@@ -34,12 +34,28 @@ test('shouldn`t lower health if health < 0', () => {
   expect(ink.health).toBe(-1);
 });
 
-/*
 test.each([
-    ['M', 'Bowerman'],
-    ['Rargnastanya', 'Swordsman'],
-  ])('should throw error about name', (characterName, type) => {
-    expect(new Character(characterName, type)).
-    toThrow(new Error('Имя должно содержать не менее 2-х и не более 10-и букв'));
-  });
-  */
+  ['M', 'Bowerman'],
+  ['Rargnastanya', 'Swordsman'],
+])('should throw error about name %s', (characterName, type) => {
+  function checkLettersInName() {
+    return new Character(characterName, type);
+  }
+  expect(checkLettersInName).toThrow(new Error('Имя должно содержать не менее 2-х и не более 10-и букв'));
+});
+
+test('should throw error about type', () => {
+  function checkType() {
+    return new Character('Rar', 'Ork');
+  }
+  expect(checkType).toThrow(new Error('неверный тип персонажа!'));
+});
+
+test('should throw error about level', () => {
+  const ink = new Character('Rar', 'Undead');
+  ink.health = 0;
+  function checkLevel() {
+    return ink.levelUp();
+  }
+  expect(checkLevel).toThrow();
+});
