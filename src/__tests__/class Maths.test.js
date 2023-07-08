@@ -24,27 +24,43 @@ test('should return this.stone', () => {
   expect(ink.stoned).toBeTruthy();
 });
 
-test('should set attack depending on the distance wihtout stone', () => {
+test('should set distance', () => {
   const ink = new Maths('ink', 'Daemon');
-  ink.setAttack(2);
-  expect(ink.attack).toBe(22.5);
+  ink.setDistance(2);
+  expect(ink.distance).toBe(2);
 });
 
-test('should set attack depending on the distance wiht stone', () => {
+test('should return distance', () => {
   const ink = new Maths('ink', 'Daemon');
+  ink.setDistance(2);
+  expect(ink.getDistance()).toBe(2);
+});
+
+test('should set attack', () => {
+  const ink = new Maths('ink', 'Daemon');
+  ink.setAttack(100);
+  expect(ink.attack).toBe(100);
+});
+
+test('should return attack without stone', () => {
+  const ink = new Maths('ink', 'Daemon');
+  ink.setAttack(100);
+  ink.setDistance(2);
+  expect(ink.getAttack()).toBe(90);
+});
+
+test('should return attack with stone', () => {
+  const ink = new Maths('ink', 'Daemon');
+  ink.setAttack(100);
+  ink.setDistance(2);
   ink.stoned = true;
-  ink.setAttack(2);
-  expect(ink.attack).toBe(18);
+  expect(ink.getAttack()).toBe(85);
 });
 
-test('shouldnt set a negative attack', () => {
+test('shouldnt return a negative attack', () => {
   const ink = new Maths('ink', 'Daemon');
+  ink.setAttack(25);
+  ink.setDistance(7);
   ink.stoned = true;
-  ink.setAttack(7);
-  expect(ink.attack).toBe(0);
-});
-
-test('should return this.attack', () => {
-  const ink = new Maths('ink', 'Daemon');
-  expect(ink.getAttack()).toBe(25);
+  expect(ink.getAttack()).toBe(0);
 });
